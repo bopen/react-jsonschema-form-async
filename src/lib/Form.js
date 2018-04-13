@@ -19,6 +19,10 @@ class Form extends Component {
   };
 
   fillFormErrors = (validationErrors) => {
+    if (!validationErrors) {
+      console.error('Errors has not been found');
+      return;
+    }
     const { errors, errorSchema } = this.form.state;
     const newErrorSchema = cloneDeep(errorSchema);
     const newErrors = cloneDeep(errors);
@@ -41,6 +45,9 @@ class Form extends Component {
       })
       .catch((err) => {
         const errors = get(err, errorsAccessor);
+        if (process.env.NODE_ENV !== 'production') {
+          console.error(err, errors);
+        }
         this.fillFormErrors(errors);
       });
   };
