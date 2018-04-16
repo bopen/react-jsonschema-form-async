@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { Component, Fragment } from 'react';
 import Form from '../lib';
 
@@ -45,8 +46,13 @@ export const delay = (ms) => {
 class App extends Component {
   state = { typedData: {}, submittedData: {}, loading: false };
 
-  handleSubmit = ({ formData }) => {
+  handleSubmit = ({ formData, result }) => {
     this.setState({ submittedData: formData });
+    console.log(result);
+  };
+
+  handleError = (errors, err) => {
+    console.log(errors, err);
   };
 
   asyncValidate = (formData) =>
@@ -59,7 +65,7 @@ class App extends Component {
           reject(err);
           return;
         }
-        resolve();
+        resolve('Success result');
       });
     }).finally(() => {
       this.setState({ loading: false });
@@ -75,6 +81,7 @@ class App extends Component {
           noHtml5Validate
           onAsyncValidate={this.asyncValidate}
           onSubmit={this.handleSubmit}
+          onError={this.handleError}
         />
         <hr />
         <h3>Last submitted data:</h3>

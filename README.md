@@ -17,11 +17,11 @@ There's work in progress about this (see [here](https://github.com/mozilla-servi
 I'm pretty sure this library does not cover every usecase:
 
 - [x] supporting basic async validation
-- [ ] should [onSubmit](https://github.com/mozilla-services/react-jsonschema-form#form-submission) be called with a server response instead of `formData` submitted?
+- [x] should [onSubmit](https://github.com/mozilla-services/react-jsonschema-form#form-submission) be called with a server response instead of `formData` submitted?
 - [ ] testing with [onChange](https://github.com/mozilla-services/react-jsonschema-form#form-data-changes)
 - [ ] testing with [liveValidate](https://github.com/mozilla-services/react-jsonschema-form#live-validation)
 - [ ] testing with [noValidate](https://github.com/mozilla-services/react-jsonschema-form#html5-validation)
-- [ ] testing with [onError](https://github.com/mozilla-services/react-jsonschema-form#form-error-event-handler)
+- [x] testing with [onError](https://github.com/mozilla-services/react-jsonschema-form#form-error-event-handler)
 - [ ] different endpoints for validation and submit? Make any sense?
 
 **Contributions are welcome!**
@@ -49,6 +49,7 @@ const App = (props) => (
     schema={yourSchema}
     onAsyncValidate={asyncValidate}
     onSubmit={handleSubmit}
+    onError={handleError}
   />    
 )
 ```
@@ -56,15 +57,17 @@ const App = (props) => (
 Note that:
 
 * you will import and use the `Form` component from `react-jsonschema-form-async` instead of the one  from `react-jsonschema-form`.
-* the [onSubmit](https://github.com/mozilla-services/react-jsonschema-form#form-submission) prop has the same format/signature of the original library, but probably you will not use it for call an API to store data on a backend (see below).
+* the [onSubmit](https://github.com/mozilla-services/react-jsonschema-form#form-submission) prop has a similar format/signature of the original library, but probably you will not use it for call an API to store data on a backend (see below).
+  The object passed can also contains a `result` entry, which can be the whole success response.
+* the [onError](https://github.com/mozilla-services/react-jsonschema-form#form-error-event-handler) receive two parameters: the (standard) `errors` array *and* the parameter and the reject reason (commonly an exception in case of promises).
 * `onAsyncValidate` is the only new props you need to care about.
 
 The `onAsyncValidate` function is called when the form is submitted, so it receives the `formData` object as parameter.
 
 It must return a Promise or promise-like object:
 
-* if the promise resolves, `onSubmit` is called
-* if the promise is rejected, is must contains a JSON structure where error messages are stored
+* if the promise resolves, `onSubmit` is called (if provided).
+* if the promise is rejected, is must contains a JSON structure where error messages are stored and `onError` in called (is provided).
 
 An example of `onAsyncValidate`:
 
@@ -86,6 +89,26 @@ An example:
   }
 }
 ```
+
+An `onSubmit` implementation can be:
+
+```javascript
+const onSubmit = ({formData, result}) => {
+  // formData works the same as in react-jsonschema-form
+  // result depends on your Promise implementation, commonly it can be the whole JSON response
+}
+```
+
+An `onError` implementation can be:
+
+```javascript
+const onError = (errors, err) => {
+  // errors works the same as in react-jsonschema-form (array of errors)
+  // err depends on your Promise implementation, commonly it is an exception passed when rejecting
+}
+```
+
+**Note**: `onError` is called also when default client side validations fails, so the latter parameter is not always present.
 
 #### Custom JSON response
 
