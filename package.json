@@ -1,6 +1,6 @@
 {
   "name": "react-jsonschema-form-async",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An alternative Form for Mozilla's JSON Schema Form library with async validation",
   "main": "build/index.js",
   "scripts": {

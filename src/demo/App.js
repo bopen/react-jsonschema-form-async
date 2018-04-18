@@ -51,8 +51,8 @@ class App extends Component {
     console.log(result);
   };
 
-  handleError = (errors, err) => {
-    console.log(errors, err);
+  handleError = (errors, err, formData) => {
+    console.log(errors, err, formData);
   };
 
   asyncValidate = (formData) =>

@@ -3,8 +3,8 @@
 A wrapper for [react-jsonschema-form](https://github.com/mozilla-services/react-jsonschema-form) which add asynchronous validation capabilities.
 
 [![Build Status](https://travis-ci.org/bopen/react-jsonschema-form-async.svg?branch=master)](https://travis-ci.org/keul/react-jsonschema-form-async)
-[![Dependencies](https://img.shields.io/david/keul/react-jsonschema-form-async.svg)]()
-[![Dev Dependencies](https://img.shields.io/david/dev/keul/react-jsonschema-form-async.svg)]()
+[![Dependencies](https://img.shields.io/david/bopen/react-jsonschema-form-async.svg)]()
+[![Dev Dependencies](https://img.shields.io/david/dev/bopen/react-jsonschema-form-async.svg)]()
 
 ## Motivation behind this library
 
@@ -102,13 +102,14 @@ const onSubmit = ({formData, result}) => {
 An `onError` implementation can be:
 
 ```javascript
-const onError = (errors, err) => {
+const onError = (errors, err formData) => {
   // errors works the same as in react-jsonschema-form (array of errors)
   // err depends on your Promise implementation, commonly it is an exception passed when rejecting
+  // formData is the original field set sent to onAsyncValidate
 }
 ```
 
-**Note**: `onError` is called also when default client side validations fails, so the latter parameter is not always present.
+**Note**: `onError` is called also when default client side validations fails, so latter parameters are not always present.
 
 #### Custom JSON response
 

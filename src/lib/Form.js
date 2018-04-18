@@ -44,8 +44,8 @@ class Form extends Component {
     this.form.setState({ errors: [], errorSchema: {} });
     onAsyncValidate(formData)
       .then((result) => {
-        onSubmit({ formData, result });
         this.form.setState({ errors: [], errorSchema: {} });
+        onSubmit({ formData, result });
       })
       .catch((err) => {
         const errors = get(err, errorsAccessor);
@@ -53,7 +53,7 @@ class Form extends Component {
           console.error(err, errors);
         }
         this.fillFormErrors(errors);
-        onError(errors, err);
+        onError(errors, err, formData);
       });
   };
 
