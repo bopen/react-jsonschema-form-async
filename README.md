@@ -2,7 +2,7 @@
 
 A wrapper for [react-jsonschema-form](https://github.com/mozilla-services/react-jsonschema-form) which add asynchronous validation capabilities.
 
-[![Build Status](https://travis-ci.org/bopen/react-jsonschema-form-async.svg?branch=master)](https://travis-ci.org/keul/react-jsonschema-form-async)
+[![Build Status](https://travis-ci.org/bopen/react-jsonschema-form-async.svg?branch=master)](https://travis-ci.org/bopen/react-jsonschema-form-async)
 [![Dependencies](https://img.shields.io/david/bopen/react-jsonschema-form-async.svg)]()
 [![Dev Dependencies](https://img.shields.io/david/dev/bopen/react-jsonschema-form-async.svg)]()
 
